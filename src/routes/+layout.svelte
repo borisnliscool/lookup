@@ -6,13 +6,15 @@
 	import SvelteSeo from 'svelte-seo';
 </script>
 
-{#if !dev}
-	<script
-		async
-		src="https://analytics.boris.foo/script.js"
-		data-website-id="f606a422-e919-4c3f-b7eb-941689d8a349"
-	></script>
-{/if}
+<svelte:head>
+	{#if !dev}
+		<script
+			async
+			src="https://analytics.boris.foo/script.js"
+			data-website-id="f606a422-e919-4c3f-b7eb-941689d8a349"
+		></script>
+	{/if}
+</svelte:head>
 
 <main class="min-h-screen h-full bg-neutral-900 text-white">
 	<slot />
