@@ -10,7 +10,7 @@
 	export let data: PageData;
 
 	let serverData = data.serverData;
-	let autoRefresh = false;
+	let autoRefresh = true;
 
 	let playerSearch = '';
 	let resourceSearch = '';
@@ -48,8 +48,6 @@
 	$: players = getPlayerSearchResults(serverData.Data.players, playerSearch);
 	$: resources = getResourceSearchResults(serverData.Data.resources, resourceSearch);
 
-	$: console.log(resources);
-
 	onMount(() => {
 		const interval = setInterval(() => {
 			if (!autoRefresh) return;
@@ -65,6 +63,12 @@
 
 <div class="mx-auto py-16 w-full max-w-5xl">
 	<div class="px-4 flex flex-col gap-16 text-white">
+		<a href="/" class="w-full flex items-center gap-8">
+			<img class="w-24" src="/android-chrome-512x512.png" alt="logo" />
+
+			<h1 class="font-extrabold text-2xl">Boris' FiveM Server Lookup</h1>
+		</a>
+
 		<div class="flex flex-col gap-4">
 			<div>
 				<Checkbox bind:checked={autoRefresh} label="Auto refresh list" />
@@ -84,7 +88,11 @@
 		</div>
 
 		<div class="flex flex-col gap-4">
-			<h3 class="text-2xl font-semibold">Players</h3>
+			<h3 class="text-2xl font-semibold">
+				Players <span class="text-neutral-500 italic text-xl">
+					({serverData.Data.players.length} / {serverData.Data.sv_maxclients})
+				</span>
+			</h3>
 
 			<div class="flex flex-col gap-4">
 				<div class="w-full">
@@ -108,7 +116,11 @@
 		</div>
 
 		<div class="flex flex-col gap-4">
-			<h3 class="text-2xl font-semibold">Resources</h3>
+			<h3 class="text-2xl font-semibold">
+				Resources <span class="text-neutral-500 italic text-xl">
+					({serverData.Data.resources.length})
+				</span>
+			</h3>
 
 			<div class="flex flex-col gap-1">
 				<label for="search">Search query</label>
