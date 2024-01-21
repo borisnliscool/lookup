@@ -14,6 +14,8 @@
 
 	let playerSearch = '';
 	let resourceSearch = '';
+	let lastSearchAttempt = new Date();
+	let now = new Date();
 
 	const getPlayerSearchResults = (players: CfxPlayer[], search: string) => {
 		if (search.startsWith('#')) {
@@ -52,14 +54,31 @@
 		const interval = setInterval(() => {
 			if (!autoRefresh) return;
 
+			lastSearchAttempt = new Date();
+
 			fetch(`https://servers-frontend.fivem.net/api/servers/single/${serverData.EndPoint}`)
 				.then((r) => r.json())
 				.then((r) => (serverData = r));
 		}, 60_000);
 
-		return () => clearInterval(interval);
+		const tickInterval = setInterval(() => {
+			if (!autoRefresh) return;
+			now = new Date();
+		}, 100);
+
+		return () => {
+			clearInterval(interval);
+			clearInterval(tickInterval);
+		};
 	});
 </script>
+
+{#if autoRefresh}
+	<div
+		class="fixed top-0 left-0 h-1 bg-blue-500 transition-all"
+		style="width: {(((lastSearchAttempt.getTime() - now.getTime()) * -1) / 60_000) * 100}%"
+	/>
+{/if}
 
 <div class="mx-auto py-16 w-full max-w-5xl">
 	<div class="px-4 flex flex-col gap-16 text-white">
