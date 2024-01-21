@@ -1,6 +1,7 @@
 <script lang="ts">
 	import CfxUtils from '$lib/CfxUtils';
 	import Checkbox from '$lib/Checkbox.svelte';
+	import Icon from '@iconify/svelte';
 	import Fuse from 'fuse.js';
 	import { onMount } from 'svelte';
 	import type { CfxPlayer } from '../../app';
@@ -101,15 +102,57 @@
 				/>
 			{/if}
 
-			<h1 class="text-4xl font-extrabold">
-				{@html CfxUtils.toColored(serverData.Data.hostname)}
-			</h1>
+			<div class="flex gap-4">
+				<img
+					src="https://servers-live.fivem.net/servers/icon/{serverData.EndPoint}/{serverData.Data
+						.iconVersion}.png"
+					class="w-24 h-24"
+					alt="server logo"
+				/>
+
+				<div class="flex flex-col gap-2">
+					<h1 class="text-4xl font-extrabold">
+						{@html CfxUtils.toColored(serverData.Data.hostname)}
+					</h1>
+
+					<div>
+						{@html CfxUtils.toColored(serverData.Data.vars.sv_projectDesc)}
+					</div>
+
+					<div class="flex flex-wrap gap-2">
+						<a
+							class="w-fit border rounded border-neutral-700 text-sm flex items-center"
+							href="https://cfx.re/join/{serverData.EndPoint}"
+							target="_blank"
+						>
+							<div class="bg-neutral-700 h-full grid place-items-center px-3">Join</div>
+							<div class="px-3 py-1.5 flex items-center gap-2">
+								<Icon icon="fa6-solid:link" />
+								cfx.re/join/{serverData.EndPoint}
+							</div>
+						</a>
+
+						<a
+							href={serverData.Data.ownerProfile}
+							class="w-fit border rounded border-neutral-700 text-sm flex items-center"
+							target="_blank"
+						>
+							<div class="bg-neutral-700 h-full grid place-items-center px-3">Owner</div>
+							<div class="px-3 py-1.5 flex items-center gap-2">
+								<img class="w-4" src={serverData.Data.ownerAvatar} alt="" />
+
+								{serverData.Data.ownerName}
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<div class="flex flex-col gap-4">
-			<h3 class="text-2xl font-semibold">
+			<h3 class="text-2xl font-semibold flex items-center justify-between">
 				Players <span class="text-neutral-500 italic text-xl">
-					({serverData.Data.players.length} / {serverData.Data.sv_maxclients})
+					({serverData.Data.players.length}/{serverData.Data.sv_maxclients})
 				</span>
 			</h3>
 
@@ -135,7 +178,7 @@
 		</div>
 
 		<div class="flex flex-col gap-4">
-			<h3 class="text-2xl font-semibold">
+			<h3 class="text-2xl font-semibold flex items-center justify-between">
 				Resources <span class="text-neutral-500 italic text-xl">
 					({serverData.Data.resources.length})
 				</span>
