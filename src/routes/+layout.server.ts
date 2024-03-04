@@ -11,5 +11,5 @@ export const load = (async () => {
 	);
 	const data: Commit[] = await response.json();
 
-	return { commit: data[0].sha, version: packageJson.version };
+	return { commit: data?.[0]?.sha, version: packageJson.version };
 }) satisfies LayoutServerLoad;
