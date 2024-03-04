@@ -26,12 +26,14 @@
 		<p>
 			Copyright © {new Date().getFullYear()} boris.foo, All rights reserved.
 		</p>
-		<p>
-			Version: v{data.version}, commit:
-			<a href="https://github.com/borisnliscool/lookup/commit/{data.commit}" target="_blank">
-				{data?.commit?.substring(0, 7)}
-			</a>
-		</p>
+		{#if data.commit}
+			<p>
+				Version: v{data.version}, commit:
+				<a href="https://github.com/borisnliscool/lookup/commit/{data.commit}" target="_blank">
+					{data.commit.substring(0, 7)}
+				</a>
+			</p>
+		{/if}
 	</footer>
 </main>
 
