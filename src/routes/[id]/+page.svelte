@@ -20,19 +20,27 @@
 	let now = new Date();
 
 	const getPlayerSearchResults = (players: CfxPlayer[], search: string) => {
-		if (search.startsWith('#')) {
+		const trimmedSearch = search.trim();
+
+		if (trimmedSearch.startsWith('#')) {
 			return players
-				.filter((p) => p.id.toString().includes(search.replace(/\D/g, '')))
+				.filter((p) => p.id.toString().includes(trimmedSearch.replace(/\D/g, '')))
 				.toSorted((a, b) => b.id - a.id);
 		}
 
-		if (search.length < 3) return players.toSorted((a, b) => b.id - a.id);
+		if (trimmedSearch.length < 3) return players.toSorted((a, b) => b.id - a.id);
 
 		const fuse = new Fuse(players, {
 			keys: ['name']
 		});
 
-		return fuse.search(search).map((i) => i.item);
+		const fuseResults = fuse.search(trimmedSearch).map((i) => i.item);
+		return new Set([
+			...fuseResults,
+			...(trimmedSearch.length > 8
+				? players.filter((p) => p.identifiers.some((i) => i.includes(trimmedSearch)))
+				: [])
+		]);
 	};
 
 	const getResourceSearchResults = (resources: string[], search: string) => {
