@@ -6,10 +6,17 @@ interface Commit {
 }
 
 export const load = (async () => {
-	const response = await fetch(
-		'https://api.github.com/repos/borisnliscool/lookup/commits?per_page=1'
-	);
-	const data: Commit[] = await response.json();
+	let commit = null;
 
-	return { commit: data?.[0]?.sha, version: packageJson.version };
+	try {
+		const response = await fetch(
+			'https://api.github.com/repos/borisnliscool/lookup/commits?per_page=1'
+		);
+		const data: Commit[] = await response.json();
+		commit = data?.[0]?.sha;
+	} catch (err) {
+		console.error(err);
+	}
+
+	return { commit, version: packageJson.version };
 }) satisfies LayoutServerLoad;
