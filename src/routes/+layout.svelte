@@ -30,7 +30,7 @@
 			<p>
 				Version: v{data.version}, commit:
 				<a href="https://github.com/borisnliscool/lookup/commit/{data.commit}" target="_blank">
-					{data.commit.substring(0, 7)}
+					{data.commit.substring(0, 6)}
 				</a>
 			</p>
 		{/if}
