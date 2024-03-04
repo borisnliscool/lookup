@@ -24,7 +24,8 @@
 
 	<footer class="w-full text-center text-neutral-400 text-xs py-2">
 		<p>
-			Copyright © {new Date().getFullYear()} boris.foo, All rights reserved.
+			Copyright © {new Date().getFullYear()}
+			<a href="https://boris.foo" target="_blank">boris.foo</a>, All rights reserved.
 		</p>
 		{#if data.commit}
 			<p>
