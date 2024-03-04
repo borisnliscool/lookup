@@ -1,7 +1,6 @@
 <script lang="ts">
 	import CfxUtils from '$lib/CfxUtils';
 	import Checkbox from '$lib/Checkbox.svelte';
-	import Footer from '$lib/Footer.svelte';
 	import Icon from '@iconify/svelte';
 	import Fuse from 'fuse.js';
 	import { onMount } from 'svelte';
@@ -214,8 +213,4 @@
 			</div>
 		</div>
 	</div>
-</div>
-
-<div class="w-full grid place-items-center pb-2">
-	<Footer />
 </div>

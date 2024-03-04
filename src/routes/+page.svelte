@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Footer from '$lib/Footer.svelte';
 	import { scale } from 'svelte/transition';
 
 	let serverId = 'bdmdx4';
@@ -27,8 +26,4 @@
 			{/if}
 		</div>
 	</div>
-</div>
-
-<div class="fixed bottom-2 left-0 w-full grid place-items-center">
-	<Footer />
 </div>
