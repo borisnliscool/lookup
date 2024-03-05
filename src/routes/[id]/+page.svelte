@@ -178,9 +178,11 @@
 				</div>
 
 				<div class="flex w-full flex-col gap-2">
-					{#each players as player}
-						<PlayerCard {player} />
-					{/each}
+					{#key players}
+						{#each players as player}
+							<PlayerCard {player} />
+						{/each}
+					{/key}
 				</div>
 			</div>
 		</div>
