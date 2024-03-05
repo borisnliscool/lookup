@@ -200,7 +200,7 @@
 					id="search"
 					bind:value={resourceSearch}
 					placeholder="resource name"
-					class="rounded border border-neutral-600 bg-transparent px-4 py-2 outline-none transition-all placeholder:text-neutral-700 focus:border-blue-500 focus:ring"
+					class="rounded border border-neutral-600 bg-transparent px-4 py-2 outline-none backdrop-blur-sm transition-all placeholder:text-neutral-700 focus:border-blue-500 focus:ring"
 				/>
 			</div>
 

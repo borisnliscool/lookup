@@ -9,7 +9,10 @@
 	let opened = false;
 </script>
 
-<div class="rounded border border-neutral-700 bg-neutral-800" class:col-span-full={opened}>
+<div
+	class="rounded border border-neutral-700 bg-gradient-to-b from-neutral-700 to-neutral-800"
+	class:col-span-full={opened}
+>
 	<button
 		on:click={() => (opened = !opened)}
 		class="flex w-full items-center justify-between px-4 py-3"
