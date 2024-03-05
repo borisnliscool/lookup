@@ -10,7 +10,7 @@
 </script>
 
 <div
-	class="rounded border border-neutral-700 bg-gradient-to-b from-neutral-700 to-neutral-800"
+	class="rounded border border-neutral-700 bg-neutral-800 bg-gradient-to-b from-neutral-700/50 to-neutral-800"
 	class:col-span-full={opened}
 >
 	<button
