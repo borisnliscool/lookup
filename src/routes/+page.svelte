@@ -12,7 +12,7 @@
 			<input
 				bind:value={serverId}
 				placeholder="server id"
-				class="px-4 py-2 border border-neutral-600 text-center rounded bg-transparent outline-none focus:ring focus:border-blue-500 transition-all placeholder:text-neutral-700"
+				class="px-4 py-2 border border-neutral-600 text-center rounded bg-transparent outline-none focus:ring focus:border-blue-500 transition-all placeholder:text-neutral-700 backdrop-blur-sm"
 			/>
 
 			{#if serverId.length == 6}

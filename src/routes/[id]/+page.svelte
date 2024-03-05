@@ -172,7 +172,7 @@
 							id="search"
 							bind:value={playerSearch}
 							placeholder="#id or player name"
-							class="px-4 py-2 border border-neutral-600 rounded bg-transparent outline-none focus:ring focus:border-blue-500 transition-all placeholder:text-neutral-700"
+							class="px-4 py-2 border border-neutral-600 rounded bg-transparent outline-none focus:ring focus:border-blue-500 transition-all placeholder:text-neutral-700 backdrop-blur-sm"
 						/>
 					</div>
 				</div>
