@@ -19,7 +19,7 @@
 	{/if}
 </svelte:head>
 
-<main class="min-h-screen h-full bg-neutral-900 text-white">
+<main class="min-h-screen h-full pattern-topography-neutral-800/15 bg-neutral-900 text-white">
 	<slot />
 
 	<footer class="w-full text-center text-neutral-400 text-xs py-2">
