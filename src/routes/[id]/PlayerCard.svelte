@@ -29,7 +29,7 @@
 			<div class="flex flex-col gap-1">
 				<p class="font-semibold text-lg">Identifiers</p>
 
-				<div class="flex flex-col gap-2">
+				<div class="flex flex-col gap-2 max-w-full">
 					{#each player.identifiers as identifier}
 						<PlayerIdentifier {identifier} />
 					{/each}
