@@ -9,13 +9,13 @@
 	let opened = false;
 </script>
 
-<div class="border border-neutral-700 bg-neutral-800 rounded" class:col-span-full={opened}>
+<div class="rounded border border-neutral-700 bg-neutral-800" class:col-span-full={opened}>
 	<button
 		on:click={() => (opened = !opened)}
-		class="w-full flex items-center justify-between px-4 py-3"
+		class="flex w-full items-center justify-between px-4 py-3"
 	>
 		<p class="font-semibold">
-			<span class="text-neutral-500 pr-1">[#{player.id}]</span>
+			<span class="pr-1 text-neutral-500">[#{player.id}]</span>
 			{player.name}
 		</p>
 
@@ -27,9 +27,9 @@
 	{#if opened}
 		<div class="px-4 pb-3" transition:slide>
 			<div class="flex flex-col gap-1">
-				<p class="font-semibold text-lg">Identifiers</p>
+				<p class="text-lg font-semibold">Identifiers</p>
 
-				<div class="flex flex-col gap-2 max-w-full">
+				<div class="flex max-w-full flex-col gap-2">
 					{#each player.identifiers as identifier}
 						<PlayerIdentifier {identifier} />
 					{/each}

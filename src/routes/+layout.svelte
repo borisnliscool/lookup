@@ -19,10 +19,10 @@
 	{/if}
 </svelte:head>
 
-<main class="min-h-screen h-full pattern-topography-neutral-800/15 bg-neutral-900 text-white">
+<main class="h-full min-h-screen bg-neutral-900 text-white pattern-topography-neutral-800/15">
 	<slot />
 
-	<footer class="w-full text-center text-neutral-400 text-xs py-2">
+	<footer class="w-full py-2 text-center text-xs text-neutral-400">
 		<p>
 			Copyright © {new Date().getFullYear()}
 			<a href="https://boris.foo" target="_blank">boris.foo</a>, All rights reserved.

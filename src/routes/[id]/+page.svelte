@@ -84,17 +84,17 @@
 
 {#if autoRefresh}
 	<div
-		class="fixed top-0 left-0 h-1 bg-blue-500 transition-all"
+		class="fixed left-0 top-0 h-1 bg-blue-500 transition-all"
 		style="width: {(((lastSearchAttempt.getTime() - now.getTime()) * -1) / 60_000) * 100}%"
 	/>
 {/if}
 
-<div class="mx-auto py-16 w-full max-w-5xl">
-	<div class="px-4 flex flex-col gap-16 text-white">
-		<a href="/" class="w-full flex items-center gap-8">
+<div class="mx-auto w-full max-w-5xl py-16">
+	<div class="flex flex-col gap-16 px-4 text-white">
+		<a href="/" class="flex w-full items-center gap-8">
 			<img class="w-24" src="/android-chrome-512x512.png" alt="logo" />
 
-			<h1 class="font-extrabold text-2xl">Boris' FiveM Server Lookup</h1>
+			<h1 class="text-2xl font-extrabold">Boris' FiveM Server Lookup</h1>
 		</a>
 
 		<div class="flex flex-col gap-4">
@@ -114,7 +114,7 @@
 				<img
 					src="https://servers-live.fivem.net/servers/icon/{serverData.EndPoint}/{serverData.Data
 						.iconVersion}.png"
-					class="w-24 h-24"
+					class="h-24 w-24"
 					alt="server logo"
 				/>
 
@@ -129,12 +129,12 @@
 
 					<div class="flex flex-wrap gap-2">
 						<a
-							class="w-fit border rounded border-neutral-700 text-sm flex items-center"
+							class="flex w-fit items-center rounded border border-neutral-700 text-sm"
 							href="https://cfx.re/join/{serverData.EndPoint}"
 							target="_blank"
 						>
-							<div class="bg-neutral-700 h-full grid place-items-center px-3">Join</div>
-							<div class="px-3 py-1.5 flex items-center gap-2">
+							<div class="grid h-full place-items-center bg-neutral-700 px-3">Join</div>
+							<div class="flex items-center gap-2 px-3 py-1.5">
 								<Icon icon="fa6-solid:link" />
 								cfx.re/join/{serverData.EndPoint}
 							</div>
@@ -142,11 +142,11 @@
 
 						<a
 							href={serverData.Data.ownerProfile}
-							class="w-fit border rounded border-neutral-700 text-sm flex items-center"
+							class="flex w-fit items-center rounded border border-neutral-700 text-sm"
 							target="_blank"
 						>
-							<div class="bg-neutral-700 h-full grid place-items-center px-3">Owner</div>
-							<div class="px-3 py-1.5 flex items-center gap-2">
+							<div class="grid h-full place-items-center bg-neutral-700 px-3">Owner</div>
+							<div class="flex items-center gap-2 px-3 py-1.5">
 								<img class="w-4" src={serverData.Data.ownerAvatar} alt="" />
 
 								{serverData.Data.ownerName}
@@ -158,8 +158,8 @@
 		</div>
 
 		<div class="flex flex-col gap-4">
-			<h3 class="text-2xl font-semibold flex items-center justify-between">
-				Players <span class="text-neutral-500 italic text-xl">
+			<h3 class="flex items-center justify-between text-2xl font-semibold">
+				Players <span class="text-xl italic text-neutral-500">
 					({serverData.Data.players.length}/{serverData.Data.sv_maxclients})
 				</span>
 			</h3>
@@ -172,12 +172,12 @@
 							id="search"
 							bind:value={playerSearch}
 							placeholder="#id or player name"
-							class="px-4 py-2 border border-neutral-600 rounded bg-transparent outline-none focus:ring focus:border-blue-500 transition-all placeholder:text-neutral-700 backdrop-blur-sm"
+							class="rounded border border-neutral-600 bg-transparent px-4 py-2 outline-none backdrop-blur-sm transition-all placeholder:text-neutral-700 focus:border-blue-500 focus:ring"
 						/>
 					</div>
 				</div>
 
-				<div class="w-full flex flex-col gap-2">
+				<div class="flex w-full flex-col gap-2">
 					{#each players as player}
 						<PlayerCard {player} />
 					{/each}
@@ -186,8 +186,8 @@
 		</div>
 
 		<div class="flex flex-col gap-4">
-			<h3 class="text-2xl font-semibold flex items-center justify-between">
-				Resources <span class="text-neutral-500 italic text-xl">
+			<h3 class="flex items-center justify-between text-2xl font-semibold">
+				Resources <span class="text-xl italic text-neutral-500">
 					({serverData.Data.resources.length})
 				</span>
 			</h3>
@@ -198,14 +198,14 @@
 					id="search"
 					bind:value={resourceSearch}
 					placeholder="resource name"
-					class="px-4 py-2 border border-neutral-600 rounded bg-transparent outline-none focus:ring focus:border-blue-500 transition-all placeholder:text-neutral-700"
+					class="rounded border border-neutral-600 bg-transparent px-4 py-2 outline-none transition-all placeholder:text-neutral-700 focus:border-blue-500 focus:ring"
 				/>
 			</div>
 
 			<div class="flex flex-wrap gap-1">
 				{#each resources as resource}
 					<div
-						class="px-2 py-1 text-sm border border-neutral-700 bg-neutral-800 text-neutral-200 rounded"
+						class="rounded border border-neutral-700 bg-neutral-800 px-2 py-1 text-sm text-neutral-200"
 					>
 						{resource}
 					</div>

@@ -6,7 +6,7 @@
 	$: [service, id] = identifier.split(':');
 </script>
 
-<p class="font-mono text-sm w-full break-all leading-none">
+<p class="w-full break-all font-mono text-sm leading-none">
 	{#if service == 'discord'}
 		<a href="https://discord.com/users/{id}" target="_blank" class="flex items-center gap-4">
 			<span class="text-xl">
