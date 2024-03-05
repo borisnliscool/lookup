@@ -1,6 +1,6 @@
 {
 	"name": "lookup",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -15,7 +15,7 @@
 		"@iconify/svelte": "^3.1.6",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/adapter-cloudflare": "^4.1.0",
-		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/kit": "^2.4.3",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/eslint": "8.56.0",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
