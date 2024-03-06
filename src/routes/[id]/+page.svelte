@@ -83,10 +83,12 @@
 </script>
 
 {#if autoRefresh}
-	<div
-		class="fixed left-0 top-0 h-1 bg-blue-500 transition-all"
-		style="width: {(((lastSearchAttempt.getTime() - now.getTime()) * -1) / 60_000) * 100}%"
-	/>
+	<div class="fixed left-0 top-0 h-1 w-full bg-black/25 shadow-sm backdrop-blur-sm">
+		<div
+			class="absolute h-1 bg-blue-500 transition-all"
+			style="width: {(((lastSearchAttempt.getTime() - now.getTime()) * -1) / 60_000) * 100}%"
+		/>
+	</div>
 {/if}
 
 <div class="mx-auto w-full max-w-5xl py-16">
