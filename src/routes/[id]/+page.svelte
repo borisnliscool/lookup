@@ -173,6 +173,7 @@
 					class="w-full"
 					label="Search query"
 					placeholder="#id or player name"
+					clearable={true}
 				/>
 
 				<div class="flex w-full flex-col gap-2">
@@ -197,6 +198,7 @@
 				class="w-full"
 				label="Search query"
 				placeholder="resource name"
+				clearable={true}
 			/>
 
 			<div class="flex flex-wrap gap-1">
