@@ -1,6 +1,7 @@
 <script lang="ts">
 	import CfxUtils from '$lib/CfxUtils';
 	import Checkbox from '$lib/Checkbox.svelte';
+	import Input from '$lib/Input.svelte';
 	import Icon from '@iconify/svelte';
 	import Fuse from 'fuse.js';
 	import { onMount } from 'svelte';
@@ -167,17 +168,12 @@
 			</h3>
 
 			<div class="flex flex-col gap-4">
-				<div class="w-full">
-					<div class="flex flex-col gap-1">
-						<label for="search">Search query</label>
-						<input
-							id="search"
-							bind:value={playerSearch}
-							placeholder="#id or player name"
-							class="rounded border border-neutral-600 bg-transparent px-4 py-2 outline-none backdrop-blur-sm transition-all placeholder:text-neutral-700 focus:border-blue-500 focus:ring"
-						/>
-					</div>
-				</div>
+				<Input
+					bind:value={playerSearch}
+					class="w-full"
+					label="Search query"
+					placeholder="#id or player name"
+				/>
 
 				<div class="flex w-full flex-col gap-2">
 					{#key players}
@@ -196,15 +192,12 @@
 				</span>
 			</h3>
 
-			<div class="flex flex-col gap-1">
-				<label for="search">Search query</label>
-				<input
-					id="search"
-					bind:value={resourceSearch}
-					placeholder="resource name"
-					class="rounded border border-neutral-600 bg-transparent px-4 py-2 outline-none backdrop-blur-sm transition-all placeholder:text-neutral-700 focus:border-blue-500 focus:ring"
-				/>
-			</div>
+			<Input
+				bind:value={resourceSearch}
+				class="w-full"
+				label="Search query"
+				placeholder="resource name"
+			/>
 
 			<div class="flex flex-wrap gap-1">
 				{#each resources as resource}

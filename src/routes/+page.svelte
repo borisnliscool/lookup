@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Input from '$lib/Input.svelte';
 	import { scale } from 'svelte/transition';
 
 	let serverId = 'bdmdx4';
@@ -9,11 +10,7 @@
 		<h1 class="text-center text-2xl font-extrabold">Boris' FiveM Server Lookup</h1>
 
 		<div class="flex max-w-xs flex-col gap-2">
-			<input
-				bind:value={serverId}
-				placeholder="server id"
-				class="rounded border border-neutral-600 bg-transparent px-4 py-2 text-center outline-none backdrop-blur-sm transition-all placeholder:text-neutral-700 focus:border-blue-500 focus:ring"
-			/>
+			<Input bind:value={serverId} class="w-full text-center" placeholder="server id" />
 
 			{#if serverId.length == 6}
 				<a
