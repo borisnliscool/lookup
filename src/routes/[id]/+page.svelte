@@ -2,10 +2,12 @@
 	import CfxUtils from '$lib/CfxUtils';
 	import Checkbox from '$lib/Checkbox.svelte';
 	import Input from '$lib/Input.svelte';
+	import { localStorageStore } from '$lib/localStorageStore';
 	import Icon from '@iconify/svelte';
 	import Fuse from 'fuse.js';
 	import { onMount } from 'svelte';
-	import type { CfxPlayer } from '../../app';
+	import { get } from 'svelte/store';
+	import type { Alert, CfxPlayer } from '../../app';
 	import type { PageData } from './$types';
 	import PlayerCard from './PlayerCard.svelte';
 
@@ -18,6 +20,12 @@
 	let resourceSearch = '';
 	let lastSearchAttempt = new Date();
 	let now = new Date();
+
+	let oldPlayers: CfxPlayer[] = [];
+	$: players = getPlayerSearchResults(serverData.Data.players, playerSearch);
+	$: resources = getResourceSearchResults(serverData.Data.resources, resourceSearch);
+
+	const alertsStore = localStorageStore<Alert[]>('alerts', []);
 
 	const getPlayerSearchResults = (players: CfxPlayer[], search: string) => {
 		const trimmedSearch = search.trim();
@@ -35,12 +43,14 @@
 		});
 
 		const fuseResults = fuse.search(trimmedSearch).map((i) => i.item);
-		return new Set([
-			...fuseResults,
-			...(trimmedSearch.length > 8
-				? players.filter((p) => p.identifiers.some((i) => i.includes(trimmedSearch)))
-				: [])
-		]);
+		return [
+			...new Set([
+				...fuseResults,
+				...(trimmedSearch.length > 8
+					? players.filter((p) => p.identifiers.some((i) => i.includes(trimmedSearch)))
+					: [])
+			])
+		];
 	};
 
 	const getResourceSearchResults = (resources: string[], search: string) => {
@@ -57,18 +67,52 @@
 		return fuse.search(search).map((i) => i.item.resource);
 	};
 
-	$: players = getPlayerSearchResults(serverData.Data.players, playerSearch);
-	$: resources = getResourceSearchResults(serverData.Data.resources, resourceSearch);
+	const checkAlerts = () => {
+		const alerts = get(alertsStore);
+
+		const newPlayers = players.filter((p) => !oldPlayers.find((op) => p.id == op.id));
+		const removedPlayers = oldPlayers.filter((p) => !players.find((op) => p.id == op.id));
+
+		for (const alert of alerts) {
+			for (const player of newPlayers) {
+				if (
+					player.identifiers.some((i) => alert.identifiers.includes(i)) ||
+					player.name.match(alert.nameRegex)
+				) {
+					console.log('Alert triggered');
+				}
+			}
+
+			for (const player of removedPlayers) {
+				if (
+					player.identifiers.some((i) => alert.identifiers.includes(i)) ||
+					player.name.match(alert.nameRegex)
+				) {
+					console.log('Alert triggered');
+				}
+			}
+		}
+	};
+
+	const update = async () => {
+		lastSearchAttempt = new Date();
+
+		const response = await fetch(
+			`https://servers-frontend.fivem.net/api/servers/single/${serverData.EndPoint}`
+		);
+		const data = await response.json();
+
+		oldPlayers = [...players];
+		serverData = data;
+		players = getPlayerSearchResults(serverData.Data.players, playerSearch);
+
+		checkAlerts();
+	};
 
 	onMount(() => {
 		const interval = setInterval(() => {
 			if (!autoRefresh) return;
-
-			lastSearchAttempt = new Date();
-
-			fetch(`https://servers-frontend.fivem.net/api/servers/single/${serverData.EndPoint}`)
-				.then((r) => r.json())
-				.then((r) => (serverData = r));
+			update().then();
 		}, 60_000);
 
 		const tickInterval = setInterval(() => {
@@ -166,6 +210,26 @@
 					({serverData.Data.players.length}/{serverData.Data.sv_maxclients})
 				</span>
 			</h3>
+
+			<!-- <div>
+				<Dialog title="Player Alerts">
+					<svelte:fragment slot="trigger" let:toggle>
+						<button
+							class="flex items-center gap-3 rounded border border-neutral-700 px-4 py-2 text-sm backdrop-blur-sm"
+							on:click={() => toggle()}
+						>
+							<Icon icon="fa6-solid:bell" />
+							Player Alerts
+						</button>
+					</svelte:fragment>
+
+					<div class="flex flex-col gap-2">
+						{#each $alertsStore as item}
+							{item}
+						{/each}
+					</div>
+				</Dialog>
+			</div> -->
 
 			<div class="flex flex-col gap-4">
 				<Input
