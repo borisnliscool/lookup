@@ -2,12 +2,12 @@
 	import CfxUtils from '$lib/CfxUtils';
 	import Checkbox from '$lib/Checkbox.svelte';
 	import Input from '$lib/Input.svelte';
-	import { localStorageStore } from '$lib/localStorageStore';
+	import { alertsStore } from '$lib/stores';
 	import Icon from '@iconify/svelte';
 	import Fuse from 'fuse.js';
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
-	import type { Alert, CfxPlayer } from '../../app';
+	import type { CfxPlayer } from '../../app';
 	import type { PageData } from './$types';
 	import PlayerCard from './PlayerCard.svelte';
 
@@ -24,8 +24,6 @@
 	let oldPlayers: CfxPlayer[] = [];
 	$: players = getPlayerSearchResults(serverData.Data.players, playerSearch);
 	$: resources = getResourceSearchResults(serverData.Data.resources, resourceSearch);
-
-	const alertsStore = localStorageStore<Alert[]>('alerts', []);
 
 	const getPlayerSearchResults = (players: CfxPlayer[], search: string) => {
 		const trimmedSearch = search.trim();
@@ -77,7 +75,7 @@
 			for (const player of newPlayers) {
 				if (
 					player.identifiers.some((i) => alert.identifiers.includes(i)) ||
-					player.name.match(alert.nameRegex)
+					player.name.match(new RegExp(alert.nameMatcher, 'gi'))
 				) {
 					console.log('Alert triggered');
 				}
@@ -86,7 +84,7 @@
 			for (const player of removedPlayers) {
 				if (
 					player.identifiers.some((i) => alert.identifiers.includes(i)) ||
-					player.name.match(alert.nameRegex)
+					player.name.match(alert.nameMatcher)
 				) {
 					console.log('Alert triggered');
 				}
@@ -212,23 +210,7 @@
 			</h3>
 
 			<!-- <div>
-				<Dialog title="Player Alerts">
-					<svelte:fragment slot="trigger" let:toggle>
-						<button
-							class="flex items-center gap-3 rounded border border-neutral-700 px-4 py-2 text-sm backdrop-blur-sm"
-							on:click={() => toggle()}
-						>
-							<Icon icon="fa6-solid:bell" />
-							Player Alerts
-						</button>
-					</svelte:fragment>
-
-					<div class="flex flex-col gap-2">
-						{#each $alertsStore as item}
-							{item}
-						{/each}
-					</div>
-				</Dialog>
+				<PlayerAlertDialog />
 			</div> -->
 
 			<div class="flex flex-col gap-4">

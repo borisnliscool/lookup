@@ -57,9 +57,9 @@ interface CfxCitizenServerData {
 	Data: CfxCitizenServerDataData;
 }
 
-interface Alert {
-	nameRegex: RegExp;
+interface PlayerActivityAlert {
+	nameMatcher: string;
 	identifiers: string[];
 }
 
-export { Alert, CfxCitizenServerData, CfxPlayer };
+export { CfxCitizenServerData, CfxPlayer, PlayerActivityAlert };

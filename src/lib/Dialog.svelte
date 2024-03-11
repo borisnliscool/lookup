@@ -24,7 +24,7 @@
 	const click = (e: MouseEvent) => {
 		if (!opened || !e.target || !closable) return;
 
-		const rect = (e.target as HTMLElement).getBoundingClientRect();
+		const rect = dialogElement.getBoundingClientRect();
 
 		const clickedInDialog =
 			rect.top <= e.clientY &&
@@ -38,13 +38,13 @@
 	$: dialogElement && (opened ? dialogElement.showModal() : dialogElement.close());
 </script>
 
-<svelte:body on:keyup={keyup} on:click={click} />
+<svelte:body on:keyup={keyup} on:click|capture={click} />
 <slot name="trigger" {toggle} />
 
 <dialog
 	bind:this={dialogElement}
 	class={cn(
-		'w-full max-w-lg rounded border border-neutral-700 bg-neutral-800 p-4 px-6 text-sm text-white shadow-lg outline-none backdrop:bg-black/25',
+		'w-full max-w-lg rounded border border-neutral-700 bg-neutral-800 p-6 pt-4 text-sm text-white shadow-lg outline-none backdrop:bg-black/50',
 		className
 	)}
 	{...$$restProps}

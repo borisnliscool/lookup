@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import type { HTMLInputAttributes } from 'svelte/elements';
+	import Label from './Label.svelte';
 	import { cn } from './cn';
 
 	type $$Props = HTMLInputAttributes & { label?: string; clearable?: boolean };
@@ -12,19 +13,28 @@
 
 	let className: $$Props['class'] = undefined;
 	export { className as class };
+
+	const id = crypto.randomUUID();
 </script>
 
-<label for="search" class="flex flex-col gap-1">
+<Label for={id}>
 	{label}
 
 	<div class="relative">
 		<input
+			on:input
+			on:change
+			on:keydown
+			on:keyup
+			on:focus
 			bind:value
+			{id}
 			{placeholder}
 			class={cn(
 				'rounded border border-neutral-600 bg-transparent px-4 py-2 outline-none backdrop-blur-sm transition-all placeholder:text-neutral-700 focus:border-blue-500 focus:ring',
 				className
 			)}
+			{...$$restProps}
 		/>
 
 		{#if clearable && value.length > 0}
@@ -36,4 +46,4 @@
 			</button>
 		{/if}
 	</div>
-</label>
+</Label>
