@@ -13,7 +13,6 @@
 	import type { PageData } from './$types';
 	import PlayerCard from './PlayerCard.svelte';
 
-	import notificationSoundEffect from '$assets/gta_online_tone.mp3';
 	import { Howl } from 'howler';
 
 	export let data: PageData;
@@ -31,7 +30,7 @@
 	$: resources = getResourceSearchResults(serverData.Data.resources, resourceSearch);
 
 	const soundEffect = new Howl({
-		src: notificationSoundEffect,
+		src: ['/sounds/gta_online_tone.mp3'],
 		volume: 0.1
 	});
 
