@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import type { HTMLInputAttributes } from 'svelte/elements';
+	import { cn } from '../cn';
 	import Label from './Label.svelte';
-	import { cn } from './cn';
 
 	type $$Props = HTMLInputAttributes & { label?: string; clearable?: boolean };
 

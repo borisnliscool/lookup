@@ -3,6 +3,7 @@
 	import '../app.postcss';
 
 	import { dev } from '$app/environment';
+	import NotificationsContainer from '$lib/ui/notifications/NotificationsContainer.svelte';
 	import SvelteSeo from 'svelte-seo';
 	import type { PageData } from './$types';
 
@@ -37,6 +38,8 @@
 		{/if}
 	</footer>
 </main>
+
+<NotificationsContainer />
 
 <SvelteSeo
 	title="Boris' FiveM Server Lookup"

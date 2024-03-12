@@ -17,7 +17,10 @@ const config = {
 				include: ['/*'],
 				exclude: ['<all>']
 			}
-		})
+		}),
+		alias: {
+			'$assets/*': 'src/assets/*'
+		}
 	}
 };
 

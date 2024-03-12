@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Input from '$lib/Input.svelte';
+	import Input from '$lib/ui/Input.svelte';
 	import { scale } from 'svelte/transition';
 
 	let serverId = 'bdmdx4';

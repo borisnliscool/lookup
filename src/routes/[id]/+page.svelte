@@ -1,8 +1,10 @@
 <script lang="ts">
 	import CfxUtils from '$lib/CfxUtils';
-	import Checkbox from '$lib/Checkbox.svelte';
-	import Input from '$lib/Input.svelte';
+	import PlayerAlertDialog from '$lib/dialogs/PlayerAlertDialog.svelte';
 	import { alertsStore } from '$lib/stores';
+	import Checkbox from '$lib/ui/Checkbox.svelte';
+	import Input from '$lib/ui/Input.svelte';
+	import { notifications } from '$lib/ui/notifications';
 	import Icon from '@iconify/svelte';
 	import Fuse from 'fuse.js';
 	import { onMount } from 'svelte';
@@ -10,6 +12,9 @@
 	import type { CfxPlayer } from '../../app';
 	import type { PageData } from './$types';
 	import PlayerCard from './PlayerCard.svelte';
+
+	import notificationSoundEffect from '$assets/gta_online_tone.mp3';
+	import { Howl } from 'howler';
 
 	export let data: PageData;
 
@@ -24,6 +29,11 @@
 	let oldPlayers: CfxPlayer[] = [];
 	$: players = getPlayerSearchResults(serverData.Data.players, playerSearch);
 	$: resources = getResourceSearchResults(serverData.Data.resources, resourceSearch);
+
+	const soundEffect = new Howl({
+		src: notificationSoundEffect,
+		volume: 0.1
+	});
 
 	const getPlayerSearchResults = (players: CfxPlayer[], search: string) => {
 		const trimmedSearch = search.trim();
@@ -65,11 +75,16 @@
 		return fuse.search(search).map((i) => i.item.resource);
 	};
 
-	const checkAlerts = () => {
+	const checkAlerts = async () => {
 		const alerts = get(alertsStore);
 
 		const newPlayers = players.filter((p) => !oldPlayers.find((op) => p.id == op.id));
 		const removedPlayers = oldPlayers.filter((p) => !players.find((op) => p.id == op.id));
+
+		const triggers: {
+			type: 'join' | 'leave';
+			username: string;
+		}[] = [];
 
 		for (const alert of alerts) {
 			for (const player of newPlayers) {
@@ -77,7 +92,10 @@
 					player.identifiers.some((i) => alert.identifiers.includes(i)) ||
 					player.name.match(new RegExp(alert.nameMatcher, 'gi'))
 				) {
-					console.log('Alert triggered');
+					triggers.push({
+						type: 'join',
+						username: player.name
+					});
 				}
 			}
 
@@ -86,8 +104,22 @@
 					player.identifiers.some((i) => alert.identifiers.includes(i)) ||
 					player.name.match(alert.nameMatcher)
 				) {
-					console.log('Alert triggered');
+					triggers.push({
+						type: 'leave',
+						username: player.name
+					});
 				}
+			}
+		}
+
+		if (triggers.length > 0) {
+			for await (const trigger of triggers) {
+				notifications.add({
+					message: `Player ${trigger.username} ${trigger.type === 'join' ? 'joined' : 'left'}`,
+					sound: soundEffect
+				});
+
+				await new Promise((r) => setTimeout(r, 500));
 			}
 		}
 	};
@@ -104,10 +136,12 @@
 		serverData = data;
 		players = getPlayerSearchResults(serverData.Data.players, playerSearch);
 
-		checkAlerts();
+		checkAlerts().then();
 	};
 
 	onMount(() => {
+		checkAlerts().then();
+
 		const interval = setInterval(() => {
 			if (!autoRefresh) return;
 			update().then();
@@ -209,9 +243,9 @@
 				</span>
 			</h3>
 
-			<!-- <div>
+			<div>
 				<PlayerAlertDialog />
-			</div> -->
+			</div>
 
 			<div class="flex flex-col gap-4">
 				<Input

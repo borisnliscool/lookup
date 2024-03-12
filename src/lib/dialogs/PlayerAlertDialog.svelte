@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Dialog from '$lib/Dialog.svelte';
-	import Input from '$lib/Input.svelte';
-	import Label from '$lib/Label.svelte';
 	import { alertsStore } from '$lib/stores';
+	import Dialog from '$lib/ui/Dialog.svelte';
+	import Input from '$lib/ui/Input.svelte';
+	import Label from '$lib/ui/Label.svelte';
 	import Icon from '@iconify/svelte';
 	import type { PlayerActivityAlert } from '../../app';
 
@@ -21,8 +21,9 @@
 
 	const addAlert = () => {
 		newPlayerAlert.identifiers = [
-			...new Set([...newPlayerAlert.identifiers, newIdentifier])
+			...new Set([...newPlayerAlert.identifiers, newIdentifier.trim()])
 		].filter(Boolean);
+		newPlayerAlert.nameMatcher = newPlayerAlert.nameMatcher.trim();
 
 		$alertsStore = [...$alertsStore, { ...newPlayerAlert }];
 
@@ -115,7 +116,7 @@
 						class="grid aspect-square w-10 place-items-center rounded bg-blue-500 text-center text-white outline-none focus:ring disabled:grayscale"
 						disabled={!newIdentifier}
 						on:click={() => {
-							newPlayerAlert.identifiers = [...newPlayerAlert.identifiers, newIdentifier];
+							newPlayerAlert.identifiers = [...newPlayerAlert.identifiers, newIdentifier.trim()];
 							newIdentifier = '';
 						}}
 					>
