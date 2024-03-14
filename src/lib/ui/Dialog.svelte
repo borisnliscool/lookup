@@ -66,3 +66,15 @@
 		<slot {toggle} {opened} />
 	</div>
 </dialog>
+
+<style lang="scss">
+	dialog[open] {
+		animation: toggle-modal 250ms ease;
+	}
+
+	@keyframes toggle-modal {
+		from {
+			opacity: 0;
+		}
+	}
+</style>
