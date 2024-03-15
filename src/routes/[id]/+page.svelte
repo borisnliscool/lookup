@@ -160,10 +160,7 @@
 
 {#if autoRefresh}
 	<div class="fixed left-0 top-0 h-1 w-full bg-black/25 shadow-sm backdrop-blur-sm">
-		<div
-			class="absolute h-1 bg-blue-500 transition-all"
-			style="width: {(((lastSearchAttempt.getTime() - now.getTime()) * -1) / 60_000) * 100}%"
-		/>
+		<div class="animate-progress absolute h-1 bg-blue-500" />
 	</div>
 {/if}
 
@@ -292,3 +289,17 @@
 		</div>
 	</div>
 </div>
+
+<style lang="scss">
+	.animate-progress {
+		width: 0;
+		animation: progress 60s linear infinite;
+		animation-fill-mode: forwards;
+	}
+
+	@keyframes progress {
+		to {
+			width: 100%;
+		}
+	}
+</style>
