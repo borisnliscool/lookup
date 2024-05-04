@@ -43,7 +43,7 @@
 	</svelte:fragment>
 
 	{#if $alertsStore.length > 0}
-		<div class="flex max-h-72 flex-col gap-1 overflow-y-auto pr-2">
+		<div class="flex max-h-72 flex-col gap-1 overflow-y-auto">
 			{#each $alertsStore as item}
 				<div
 					class="flex items-center justify-between gap-4 rounded border border-neutral-700 p-2 px-3"

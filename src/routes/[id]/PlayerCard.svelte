@@ -1,12 +1,28 @@
 <script lang="ts">
+	import { alertsStore } from '$lib/stores';
+	import { notifications } from '$lib/ui/notifications';
 	import Icon from '@iconify/svelte';
 	import { slide } from 'svelte/transition';
-	import type { CfxPlayer } from '../../app';
+	import type { CfxPlayer, PlayerActivityAlert } from '../../app';
 	import PlayerIdentifier from './PlayerIdentifier.svelte';
 
 	export let player: CfxPlayer;
 
 	let opened = false;
+
+	const addPlayerAlert = () => {
+		const newPlayerAlert: PlayerActivityAlert = {
+			nameMatcher: player.name,
+			identifiers: player.identifiers
+		};
+
+		$alertsStore = [...$alertsStore, newPlayerAlert];
+
+		notifications.add({
+			type: 'success',
+			message: `Added alert for ${player.name}`
+		});
+	};
 </script>
 
 <div
@@ -28,7 +44,7 @@
 	</button>
 
 	{#if opened}
-		<div class="px-4 pb-3" transition:slide>
+		<div class="flex flex-col gap-4 px-4 pb-3" transition:slide>
 			<div class="flex flex-col gap-1">
 				<p class="text-lg font-semibold">Identifiers</p>
 
@@ -38,6 +54,14 @@
 					{/each}
 				</div>
 			</div>
+
+			<button
+				class="flex w-fit items-center gap-2 rounded bg-blue-500 px-4 py-2 text-center text-xs text-white active:bg-blue-700"
+				on:click={addPlayerAlert}
+			>
+				<Icon icon="fa6-solid:bell" />
+				Add Alert
+			</button>
 		</div>
 	{/if}
 </div>
