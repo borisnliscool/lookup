@@ -2,7 +2,7 @@
 	import Input from '$lib/ui/Input.svelte';
 	import { scale } from 'svelte/transition';
 
-	let serverId = '9387dk';
+	let serverId = 'bdmdx4';
 </script>
 
 <div class="grid min-h-screen w-full place-items-center">
