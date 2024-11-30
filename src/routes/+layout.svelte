@@ -4,10 +4,13 @@
 
 	import { dev } from '$app/environment';
 	import NotificationsContainer from '$lib/ui/notifications/NotificationsContainer.svelte';
+	import Icon from '@iconify/svelte';
 	import SvelteSeo from 'svelte-seo';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+
+	let showDeprecationWarning = true;
 </script>
 
 <svelte:head>
@@ -21,6 +24,20 @@
 </svelte:head>
 
 <main class="h-full min-h-screen bg-neutral-900 text-white pattern-topography-neutral-800/50">
+	{#if showDeprecationWarning}
+		<div
+			class="fixed left-0 top-0 z-50 flex w-full items-center justify-between bg-orange-600 p-2 px-4 text-white"
+		>
+			<p>
+				Due to changes in FiveM's API, this application will no longer work like it used to. You are
+				still able to see online player names, but not their identifiers.
+			</p>
+			<button on:click={() => (showDeprecationWarning = false)}>
+				<Icon icon="fa6-solid:xmark" />
+			</button>
+		</div>
+	{/if}
+
 	<slot />
 
 	<footer class="w-full bg-gradient-to-t from-black/25 py-4 text-center text-xs text-neutral-400">
