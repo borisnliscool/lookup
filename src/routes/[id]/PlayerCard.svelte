@@ -33,7 +33,7 @@
 		on:click={() => (opened = !opened)}
 		class="flex w-full items-center justify-between px-4 py-3"
 	>
-		<p class="font-semibold">
+		<p class="select-text font-semibold">
 			<span class="pr-1 text-neutral-500">[#{player.id}]</span>
 			{player.name}
 		</p>
@@ -45,23 +45,36 @@
 
 	{#if opened}
 		<div class="flex flex-col gap-4 px-4 pb-3" transition:slide>
-			<div class="flex flex-col gap-1">
-				<p class="text-lg font-semibold">Identifiers</p>
+			{#if player.identifiers.length}
+				<div class="flex flex-col gap-1">
+					<p class="text-lg font-semibold">Identifiers</p>
 
-				<div class="flex max-w-full flex-col gap-2">
-					{#each player.identifiers as identifier}
-						<PlayerIdentifier {identifier} />
-					{/each}
+					<div class="flex max-w-full flex-col gap-2">
+						{#each player.identifiers as identifier}
+							<PlayerIdentifier {identifier} />
+						{/each}
+					</div>
 				</div>
-			</div>
+			{/if}
 
-			<button
-				class="flex w-fit items-center gap-2 rounded bg-blue-500 px-4 py-2 text-center text-xs text-white active:bg-blue-700"
-				on:click={addPlayerAlert}
-			>
-				<Icon icon="fa6-solid:bell" />
-				Add Alert
-			</button>
+			<div class="flex gap-2">
+				<a
+					class="flex w-fit items-center gap-2 rounded bg-blue-500 px-4 py-2 text-center text-xs text-white active:bg-blue-700"
+					href="https://steamcommunity.com/search/users/#text={player.name}"
+					target="_blank"
+				>
+					<Icon icon="fa6-brands:steam" />
+					Search steam for this username
+				</a>
+
+				<button
+					class="flex w-fit items-center gap-2 rounded bg-blue-500 px-4 py-2 text-center text-xs text-white active:bg-blue-700"
+					on:click={addPlayerAlert}
+				>
+					<Icon icon="fa6-solid:bell" />
+					Add Alert
+				</button>
+			</div>
 		</div>
 	{/if}
 </div>
